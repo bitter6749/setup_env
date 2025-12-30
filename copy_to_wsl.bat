@@ -1,23 +1,28 @@
 @echo off
+chcp 932 > nul
 set DISTRO=Ubuntu
 set TARGET_DIR=setup
 
-echo WSL(%DISTRO%) へのファイル転送を開始します...
+echo [File Transfer] Copying .sh files to WSL (%DISTRO%)...
 
-rem WSL内にディレクトリを作成
+rem Create directory in WSL
 wsl -d %DISTRO% -- bash -c "mkdir -p ~/%TARGET_DIR%"
 
-rem PowerShellを呼び出して、現在のフォルダの全.shファイルをWSLのホームディレクトリへコピー
-powershell -Command "$user = wsl -d %DISTRO% -- bash -c 'whoami'; $target = '\\wsl.localhost\%DISTRO%\home\' + $user.Trim() + '\%TARGET_DIR%'; Copy-Item '.\*.sh' -Destination $target -Force"
+rem Use PowerShell to copy files
+powershell -Command "$u = (wsl -d %DISTRO% -- bash -c 'whoami').Trim(); $dst = '\\wsl.localhost\%DISTRO%\home\' + $u + '\%TARGET_DIR%'; if (Test-Path $dst) { Copy-Item '.\*.sh' -Destination $dst -Force; echo 'Copy successful.' } else { exit 1 }"
 
 if %ERRORLEVEL% equ 0 (
-    echo [成功] すべての .sh ファイルを Ubuntu 内の ~/%TARGET_DIR% にコピーしました。
+    echo.
+    echo ===========================================================
+    echo [OK] Files copied to ~/%TARGET_DIR% in Ubuntu.
+    echo ===========================================================
+    echo Next steps in Ubuntu terminal:
+    echo 1. cd ~/%TARGET_DIR%
+    echo 2. chmod +x *.sh
+    echo 3. Run your scripts (e.g., ./01_setup_git.sh)
 ) else (
-    echo [エラー] ファイル転送に失敗しました。Ubuntuが起動しているか確認してください。
+    echo.
+    echo [ERROR] Transfer failed. Make sure Ubuntu is running.
 )
 
-echo.
-echo 次に Ubuntu を開き、以下のコマンドを実行してください：
-echo cd ~/%TARGET_DIR%
-echo chmod +x *.sh
 pause

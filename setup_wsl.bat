@@ -1,7 +1,10 @@
 @echo off
-echo WSL2のインストールを開始します...
+chcp 932 > nul
+echo [WSL2 Install] Starting installation for Ubuntu...
 wsl --install -d Ubuntu
 echo.
-echo インストールが完了しました。PCを再起動してください。
-echo 再起動後、Ubuntuのユーザー名とパスワードの設定画面が表示されます。
+echo -----------------------------------------------------------
+echo [Success] Installation finished. Please RESTART your PC.
+echo After rebooting, set your username and password in Ubuntu.
+echo -----------------------------------------------------------
 pause
