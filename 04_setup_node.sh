@@ -11,5 +11,5 @@ nvm install 20
 nvm install 22
 nvm install 24
 
-nvm alias default 22
+nvm use 24
 echo "Node.jsの各バージョンをインストールしました。現在は v$(node -v) です。"
