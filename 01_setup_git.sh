@@ -7,6 +7,7 @@ read -p "GitHubのメールアドレスを入力してください: " email
 
 git config --global user.name "$username"
 git config --global user.email "$email"
+git config --global init.defaultBranch main
 
 echo "GitHubへのログインを開始します。指示に従ってブラウザで認証してください。"
 gh auth login
