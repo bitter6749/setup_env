@@ -33,3 +33,6 @@ chmod +x *.sh
 
 # 4. 最終確認
 ./06_check_env.sh      # すべてのツールが正常か確認
+
+# 5. 以下は必須ではない
+./07_setup_nasm.sh # nasm
